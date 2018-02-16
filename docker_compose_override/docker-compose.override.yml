@@ -1,0 +1,5 @@
+version: "3"
+services:
+  embedded_service:
+    volumes:
+      - ./main:$HOME/main
