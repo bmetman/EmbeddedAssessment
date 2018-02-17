@@ -43,8 +43,8 @@ jobs:
       - run:
           name: Build measurement_client
           command: |
-            docker exec -it embedded_service bash -c 'cd $SRC_DIR/measurement_client/src && make'
-            docker exec -it embedded_service bash -c 'cd $SRC_DIR/measurement_client/src && make clean'
+            docker exec -it embedded_service bash -c 'cd ./measurement_client/src && make'
+            docker exec -it embedded_service bash -c 'cd ./measurement_client/src && make clean'
 
 
 
