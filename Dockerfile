@@ -3,6 +3,10 @@ FROM ubuntu:16.04
 RUN apt-get update && \
 	apt-get clean
 
+RUN apt-get install -y make gcc && \
+    apt-get update && \ 
+    apt-get clean
+
 ARG USER_UID
 ARG USER
 
@@ -12,7 +16,7 @@ ARG USER
 #    echo "$USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 #USER $USER
 
-ENV SRC_DIR=/home/$USER/main
+ENV SRC_DIR=/home/$USER/src
 RUN mkdir -p $SRC_DIR
 WORKDIR $SRC_DIR
 
