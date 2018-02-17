@@ -41,9 +41,11 @@ jobs:
             export USER=testuser
             docker-compose up -d
       - run:
-        name: Build measurement_client
+          name: Build measurement_client
           command: |
             docker exec -it embedded_service bash -c 'cd $SRC_DIR/measurement_client/src && make'
+            docker exec -it embedded_service bash -c 'cd $SRC_DIR/measurement_client/src && make clean'
+
 
 
 
