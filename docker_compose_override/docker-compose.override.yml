@@ -3,3 +3,4 @@ services:
   embedded_service:
     volumes:
       - ./src:$HOME/src
+      - ./src/measurement_client/src:$HOME/src/measurement_client/src
