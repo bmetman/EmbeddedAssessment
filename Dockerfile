@@ -20,9 +20,9 @@ ENV SRC_DIR=/home/$USER/src
 RUN mkdir -p $SRC_DIR
 WORKDIR $SRC_DIR
 
-USER root
-RUN chown -R $USER:$USER /home/$USER/*
-USER $USER
+#USER root
+#RUN chown -R $USER:$USER /home/$USER/*
+#USER $USER
 
 #CMD sleep infinity
 
