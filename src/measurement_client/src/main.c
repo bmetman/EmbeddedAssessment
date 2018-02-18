@@ -1,15 +1,16 @@
 /*
  ============================================================================
- Name        : measurement_client.c
+ Name        : main.c
  Author      : S. P. Metman
  Version     :
  Copyright   : 
- Description : Measurement Client
+ Description : Main file for Measurement Client
  ============================================================================
  */
 
-#include "../include/measurement_client.h"
+#include "../include/main.h"
 
-int start_measurement_client(){
-	return EXIT_SUCCESS;
+int main(void) {
+	printf("run");
+	return start_measurement_client();
 }

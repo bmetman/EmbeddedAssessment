@@ -8,8 +8,12 @@
  ============================================================================
  */
 
-#include "../include/measurement_client.h"
+#ifndef MAIN_H_
+#define MAIN_H_
 
-int start_measurement_client(){
-	return EXIT_SUCCESS;
-}
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "measurement_client.h"
+
+#endif /* MAIN_H_ */

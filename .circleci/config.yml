@@ -5,40 +5,23 @@ jobs:
       - image: ubuntu:16.04
     steps:
       - run:
-          name: Install Curl
+          name: Update and clean
           command: |
-            set -x
             apt-get update
-            apt-get install -y curl git
-      - setup_remote_docker:
-          reusable: true
+            apt-get clean
+      - run:
+          name: Install make and gcc
+          command: |
+            apt-get install -y make gcc
+            apt-get update
+            apt-get clean
       - checkout
       - run:
-          name: Install Docker client
+          name: Build and test measurement_client
           command: |
-            set -x
-            curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz
-            tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin
-      - run:
-          name: Install Docker Compose
-          command: |
-            set -x
-            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-            chmod +x /usr/local/bin/docker-compose
-      - run:
-          name: Build embedded_service image to make sure it builds
-          command: |
-            set -x
-            # At least check that it builds.
-            export USER_UID=1000
-            export USER=testuser
-            docker-compose build
-      - run:
-          name: Start Containers
-          command: |
-            set -x
-            export USER_UID=1000
-            export USER=testuser
-            docker-compose -f docker-compose.yml -f docker_compose_override/docker-compose.override.yml up -d
-
+            set -e
+            cd $HOME/project/src/measurement_client/src
+            make
+            ./test
+            make clean
 
