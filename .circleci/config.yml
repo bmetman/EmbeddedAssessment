@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Build and test measurement_client
           command: |
-            set +e
+            set -e
             cd $HOME/project/src/measurement_client/src
             make
             ./test
