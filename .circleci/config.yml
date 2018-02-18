@@ -13,6 +13,7 @@ jobs:
       - run:
           name: Build measurement_client
           command: |
+            ls
             cd $HOME/embedded_client/src/measurement_client/src && make'
             cd $HOME/embedded_client/src/measurement_client/src && make'
 
