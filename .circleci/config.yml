@@ -10,9 +10,9 @@ jobs:
             apt-get update
             apt-get clean
       - run:
-          name: Install make and gcc
+          name: Install make, gcc and valgrind
           command: |
-            apt-get install -y make gcc
+            apt-get install -y make gcc valgrind
             apt-get update
             apt-get clean
       - checkout
@@ -22,6 +22,8 @@ jobs:
             set -e
             cd $HOME/project/src/measurement_client/src
             make
+            valgrind --tool=memcheck ./run
+            valgrind --tool=memcheck ./test
             ./test
             make clean
 

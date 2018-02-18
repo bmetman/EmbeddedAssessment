@@ -13,9 +13,25 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/measurement_client.h"
+#include <time.h>
 
+#include "measurement_client.h"
+#include "sensor_interface.h"
+
+typedef enum { FALSE, TRUE } bool;
+
+int evaluate_result(int, char*);
 int main();
+
+int test_destroy_sensor();
+
+int test_sensor_interface();
+int test_create_sensor();
+int test_measure();
+int test_delay();
+int test_convert_to_update();
+int test_send_to_port();
+
 int test_measurement_client();
 
 #endif /* TEST_MEASUREMENT_CLIENT_H_ */
