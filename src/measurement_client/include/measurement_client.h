@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "sensor_interface.h"
 
 int start_measurement_client(void);
 
