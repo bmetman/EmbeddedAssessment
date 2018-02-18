@@ -40,12 +40,5 @@ jobs:
             export USER_UID=1000
             export USER=testuser
             docker-compose -f docker-compose.yml -f docker_compose_override/docker-compose.override.yml up -d
-      - run:
-          name: Build measurement_client
-          command: |
-            docker exec -it embedded_service bash -c 'cd $SRC_DIR/measurement_client/src && make'
-            docker exec -it embedded_service bash -c 'cd $SRC_DIR/measurement_client/src && make clean'
-
-
 
 
