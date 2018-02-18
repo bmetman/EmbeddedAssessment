@@ -11,8 +11,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define MAX_MEASUREMENT 100
+#define MAX_TAG_LENGTH 50
 
 typedef struct {
 	char* name;
@@ -22,10 +24,11 @@ typedef struct {
 	int delay_in_seconds;
 } sensor;
 
-sensor create_sensor(char*, int, char**, int, int);
-float* measure(sensor);
-void delay(sensor);
-char* convert_to_update(float*, sensor);
-int send_to_port(char*, sensor);
+void create_sensor(sensor*, char*, int, char**, int, int);
+int destroy_sensor(sensor*);
+float* measure(sensor*);
+void delay(sensor*);
+char* convert_to_update(float*, sensor*);
+int send_to_port(char*, sensor*);
 
 #endif /* SRC_SENSOR_INTERFACE_H_ */

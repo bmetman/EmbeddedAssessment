@@ -31,10 +31,13 @@ int main(void) {
 	sensor_tags[1] = "TAG2";
 	sensor_tags[2] = "TAG3";
 	sensor_tags[3] = "TAG4";
-	test_sensor = create_sensor("TEST_SENSOR", 4, sensor_tags, 4242, 1);
+
+	create_sensor(&test_sensor, "TEST_SENSOR", 4, sensor_tags, 4242, 1);
 
 	result += test_sensor_interface();
 	result += test_measurement_client();
+
+	destroy_sensor(&test_sensor);
 
 	return evaluate_result(result, "MEASUREMENT_CLIENT");
 }
@@ -46,6 +49,7 @@ int main(void) {
 /***********************************/
 
 int test_sensor_interface(){
+	printf("TESTING test_sensor_interface\n");
 	int result = EXIT_SUCCESS;
 	result += test_create_sensor();
 	result += test_measure();
@@ -64,15 +68,15 @@ int test_create_sensor(){
 	if(test_sensor.sensor_tags[2] != "TAG3"){result++;};
 	if(test_sensor.sensor_tags[3] != "TAG4"){result++;};
 	if(test_sensor.number_of_sensors != 4){result++;}
-	if(test_sensor.number_of_sensors != 4242){result++;}
-	if(test_sensor.delay_in_seconds != 900){result++;}
+	if(test_sensor.server_port != 4242){result++;}
+	if(test_sensor.delay_in_seconds != 1){result++;}
 
 	return evaluate_result(result, "CREATE_SENSOR");
 }
 
 int test_measure(){
 	int result = EXIT_SUCCESS;
-	float* measurements = measure(test_sensor);
+	float* measurements = measure(&test_sensor);
 
 	if(!measurements[0]){result++;}
 	if(!measurements[1]){result++;}
@@ -87,7 +91,7 @@ int test_delay(){
 	clock_t start_time, end_time;
 
 	start_time = clock();
-	delay(test_sensor);
+	delay(&test_sensor);
 	end_time = clock();
 
 	if( ((double)(end_time-start_time)/CLOCKS_PER_SEC) < test_sensor.delay_in_seconds ){result++;};
@@ -98,8 +102,8 @@ int test_delay(){
 int test_convert_to_update(){
 	int result = EXIT_SUCCESS;
 
-	float* measurements = measure(test_sensor);
-	char* XML = convert_to_update(measurements, test_sensor);
+	float* measurements = measure(&test_sensor);
+	char* XML = convert_to_update(measurements, &test_sensor);
 
 	if(XML != "<update>\n\t<personsPassed>12</personsPassed>\n\t<lightCondition>bright</lightCondition>\n\t<humidity>52</humidity>\n</update>"){result++;};
 

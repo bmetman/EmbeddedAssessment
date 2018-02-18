@@ -20,8 +20,6 @@
 
 typedef enum { FALSE, TRUE } bool;
 
-
-
 int evaluate_result(int, char*);
 int main();
 
