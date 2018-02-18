@@ -5,9 +5,8 @@ jobs:
       - image: ubuntu:16.04
     steps:
       - run:
-          name: Update and install tools
+          name: Update and clean
           command: |
-            apt-get install -y make gcc
             apt-get update
             apt-get clean
       - checkout
