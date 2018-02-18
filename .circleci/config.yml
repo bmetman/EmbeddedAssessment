@@ -17,11 +17,10 @@ jobs:
             apt-get clean
       - checkout
       - run:
-          name: Build measurement_client
+          name: Build and test measurement_client
           command: |
-            ls $HOME/project/src/measurement_client/src
             cd $HOME/project/src/measurement_client/src
             make
+            ./test
             make clean
-
 

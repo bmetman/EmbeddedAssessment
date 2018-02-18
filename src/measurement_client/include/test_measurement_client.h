@@ -8,8 +8,14 @@
  ============================================================================
  */
 
+#ifndef TEST_MEASUREMENT_CLIENT_H_
+#define TEST_MEASUREMENT_CLIENT_H_
+
+#include <stdio.h>
+#include <stdlib.h>
 #include "../include/measurement_client.h"
 
-int start_measurement_client(){
-	return EXIT_SUCCESS;
-}
+int main();
+int test_measurement_client();
+
+#endif /* TEST_MEASUREMENT_CLIENT_H_ */
