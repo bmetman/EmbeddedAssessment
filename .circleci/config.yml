@@ -39,5 +39,6 @@ jobs:
             set -x
             export USER_UID=1000
             export USER=testuser
-            docker-compose up -d
+            docker-compose -f docker-compose.yml -f docker_compose_override/docker-compose.override.yml up -d
+
 
