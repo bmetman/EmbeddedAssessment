@@ -11,5 +11,5 @@
 #include "../include/measurement_client.h"
 
 int start_measurement_client(){
-	return EXIT_FAILURE;
+	return EXIT_SUCCESS;
 }
