@@ -20,6 +20,7 @@ int evaluate_result(int result, char* current_module){
 		printf("PASSED: %s\n", current_module);
 		return EXIT_SUCCESS;
 	}
+
 }
 
 int main(void) {
@@ -38,7 +39,7 @@ int main(void) {
 	result += test_measurement_client();
 	result += test_destroy_sensor();
 
-	return evaluate_result(result, "MEASUREMENT_CLIENT\n");
+	return evaluate_result(result, "ALL TESTS\n");
 }
 
 int test_destroy_sensor(){
@@ -122,6 +123,8 @@ int test_convert_to_update(){
 		if(ezxml_attr(XML, test_sensor.sensor_tags[i]) == NULL){result++;};
 	}
 
+	ezxml_free(XML);
+
 	return evaluate_result(result, "CONVERT_TO_UPDATE");
 }
 
@@ -131,6 +134,8 @@ int test_send_to_port(){
 	ezxml_t XML = convert_to_update(measurements, &test_sensor);
 
 	result += send_to_port(XML, &test_sensor);
+
+	ezxml_free(XML);
 
 	return evaluate_result(result, "SEND_TO_PORT");
 }

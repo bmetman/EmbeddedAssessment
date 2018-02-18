@@ -41,21 +41,20 @@ void create_sensor(sensor* current_sensor, char* name, int number_of_sensors, ch
 // helper function to destroy sensor struct
 int destroy_sensor(sensor* current_sensor){
 
-	current_sensor->name = "";
-	current_sensor->number_of_sensors = 0;
-
 	//only free malloced attributes
 	free(current_sensor->sensor_tags);
-
-	current_sensor->server_port = 0;
-	current_sensor->delay_in_seconds = 0;
-
-	//only free malloced attributes
+	free(current_sensor->string_measurements);
 	free(current_sensor->measurements);
 	for (int i = 0; i < current_sensor->number_of_sensors; i++){
 		free(current_sensor->string_measurements[i]);
 	}
-	free(current_sensor->string_measurements);
+
+	//set other stuff to bogus values to be sure
+	current_sensor->name = "";
+	current_sensor->number_of_sensors = 0;
+	current_sensor->server_port = 0;
+	current_sensor->delay_in_seconds = 0;
+
 	return EXIT_SUCCESS;
 }
 
