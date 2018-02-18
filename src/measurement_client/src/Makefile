@@ -7,13 +7,13 @@ LDIR =../lib
 
 LIBS=-lm
 
-_START_DEPS = main.h measurement_client.h sensor_interface.h
-START_DEPS = $(patsubst %,$(IDIR)/%,$(_START_DEPS))
+_RUN_DEPS = main.h measurement_client.h sensor_interface.h
+RUN_DEPS = $(patsubst %,$(IDIR)/%,$(_RUN_DEPS))
 
-_START_OBJ = main.o measurement_client.o sensor_interface.o
-START_OBJ = $(patsubst %,$(ODIR)/%,$(_START_OBJ))
+_RUN_OBJ = main.o measurement_client.o sensor_interface.o
+RUN_OBJ = $(patsubst %,$(ODIR)/%,$(_RUN_OBJ))
 
-$(ODIR)/%.o: %.c $(START_DEPS)
+$(ODIR)/%.o: %.c $(RUN_DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 _TEST_DEPS =  test_measurement_client.h measurement_client.h sensor_interface.h
@@ -25,9 +25,9 @@ TEST_OBJ = $(patsubst %,$(ODIR)/%,$(_TEST_OBJ))
 $(ODIR)/%.o: %.c $(TEST_DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-all: start test
+all: run test
 
-start: $(START_OBJ)
+run: $(RUN_OBJ)
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 
 test: $(TEST_OBJ)
@@ -37,4 +37,4 @@ test: $(TEST_OBJ)
 
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
-	rm -f start test
+	rm -f run test

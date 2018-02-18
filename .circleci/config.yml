@@ -22,8 +22,8 @@ jobs:
             set -e
             cd $HOME/project/src/measurement_client/src
             make
-            valgrind --tool=memcheck start
-            valgrind --tool=memcheck test
+            valgrind --tool=memcheck ./run
+            valgrind --tool=memcheck ./test
             ./test
             make clean
 
