@@ -14,8 +14,8 @@ jobs:
           name: Build measurement_client
           command: |
             ls $HOME/project/src/measurement_client/src
-            cd $HOME/project/src/measurement_client/src && make'
-            cd $HOME/project/src/measurement_client/src && make'
-
+            cd $HOME/project/src/measurement_client/src
+            make
+            make clean
 
 
