@@ -13,8 +13,12 @@ jobs:
       - run:
           name: Build measurement_client
           command: |
+            ls
+            echo $HOME
+            ls $HOME
+            ls $HOME/src
             cd src/measurement_client/src && make'
-            cd src/measurement_client/src && make'
+            cd src/measurement_client/src && make clean'
 
 
 
