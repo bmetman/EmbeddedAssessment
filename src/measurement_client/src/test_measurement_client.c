@@ -88,12 +88,12 @@ int test_create_sensor(){
 
 int test_measure(){
 	int result = EXIT_SUCCESS;
-	float* measurements = measure(&test_sensor);
+	measure(&test_sensor);
 
-	if(!measurements[0] || measurements[0] > MAX_MEASUREMENT){result++;}
-	if(!measurements[1] || measurements[0] > MAX_MEASUREMENT){result++;}
-	if(!measurements[2] || measurements[0] > MAX_MEASUREMENT){result++;}
-	if(!measurements[3] || measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[0] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[1] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[2] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[3] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
 
 	return evaluate_result(result, "MEASUREMENTS");
 }
@@ -114,8 +114,8 @@ int test_delay(){
 int test_convert_to_update(){
 	int result = EXIT_SUCCESS;
 
-	float* measurements = measure(&test_sensor);
-	ezxml_t XML = convert_to_update(measurements, &test_sensor);
+	measure(&test_sensor);
+	ezxml_t XML = convert_to_update(&test_sensor);
 
 	if(strcmp(XML->name,"update") != 0){result++;};
 
@@ -130,8 +130,8 @@ int test_convert_to_update(){
 
 int test_send_to_port(){
 	int result = EXIT_SUCCESS;
-	float* measurements = measure(&test_sensor);
-	ezxml_t XML = convert_to_update(measurements, &test_sensor);
+	measure(&test_sensor);
+	ezxml_t XML = convert_to_update(&test_sensor);
 
 	result += send_to_port(XML, &test_sensor);
 

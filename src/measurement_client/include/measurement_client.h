@@ -13,5 +13,6 @@
 #include "sensor_interface.h"
 
 int start_measurement_client(void);
+void pretty_print_update(ezxml_t);
 
 #endif /* MEASUREMENT_CLIENT_H_ */

@@ -31,9 +31,9 @@ typedef struct {
 
 void create_sensor(sensor*, char*, int, char**, int, int);
 int destroy_sensor(sensor*);
-float* measure(sensor*);
+int measure(sensor*);
 void delay(sensor*);
-ezxml_t convert_to_update(float*, sensor*);
+ezxml_t convert_to_update(sensor*);
 int send_to_port(ezxml_t, sensor*);
 
 #endif /* SRC_SENSOR_INTERFACE_H_ */

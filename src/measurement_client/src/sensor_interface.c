@@ -61,13 +61,14 @@ int destroy_sensor(sensor* current_sensor){
 
 // get new sensor measurements
 // the actual measurement is mocked by a randomizer
-float* measure(sensor* current_sensor){
+int measure(sensor* current_sensor){
 
 	float random_measurement;
 	for(int i = 0; i < current_sensor->number_of_sensors; i++){
 		current_sensor->measurements[i] = ((float)rand()/(float)(RAND_MAX)) * MAX_MEASUREMENT;
 	}
-	return current_sensor->measurements;
+
+	return EXIT_SUCCESS;
 }
 
 void delay(sensor* current_sensor){
@@ -75,11 +76,11 @@ void delay(sensor* current_sensor){
 	return;
 }
 
-ezxml_t convert_to_update(float* measurements, sensor* current_sensor){
+ezxml_t convert_to_update(sensor* current_sensor){
 	ezxml_t XML = ezxml_new("update");
 
 	for(int i = 0; i < current_sensor->number_of_sensors; i++){
-		sprintf(current_sensor->string_measurements[i], "%.2f", measurements[i]);
+		sprintf(current_sensor->string_measurements[i], "%.2f", current_sensor->measurements[i]);
 		XML = ezxml_set_attr(XML, current_sensor->sensor_tags[i], current_sensor->string_measurements[i]);
 	}
 
