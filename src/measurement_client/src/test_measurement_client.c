@@ -73,11 +73,11 @@ int test_sensor_interface(){
 int test_create_sensor(){
 	int result = EXIT_SUCCESS;
 
-	if(test_sensor.name != "TEST_SENSOR"){result++;}
-	if(test_sensor.sensor_tags[0] != "TAG1"){result++;};
-	if(test_sensor.sensor_tags[1] != "TAG2"){result++;};
-	if(test_sensor.sensor_tags[2] != "TAG3"){result++;};
-	if(test_sensor.sensor_tags[3] != "TAG4"){result++;};
+	if(strcmp(test_sensor.name, "TEST_SENSOR")){result++;}
+	if(strcmp(test_sensor.sensor_tags[0], "TAG1")){result++;};
+	if(strcmp(test_sensor.sensor_tags[1], "TAG2")){result++;};
+	if(strcmp(test_sensor.sensor_tags[2], "TAG3")){result++;};
+	if(strcmp(test_sensor.sensor_tags[3], "TAG4")){result++;};
 	if(test_sensor.number_of_sensors != 4){result++;}
 	if(test_sensor.server_port != 4242){result++;}
 
