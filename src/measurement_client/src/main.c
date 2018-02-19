@@ -11,6 +11,6 @@
 #include "../include/main.h"
 
 int main(void) {
-	printf("run");
+	printf("\n\nSTART MEASUREMENT CLIENT\n\n");
 	return start_measurement_client();
 }

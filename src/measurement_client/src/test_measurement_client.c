@@ -33,7 +33,7 @@ int main(void) {
 	sensor_tags[2] = "TAG3";
 	sensor_tags[3] = "TAG4";
 
-	create_sensor(&test_sensor, "TEST_SENSOR", 4, sensor_tags, 4242, 1);
+	create_sensor(&test_sensor, "TEST_SENSOR", 4, sensor_tags, 4242);
 
 	result += test_sensor_interface();
 	result += test_measurement_client();
@@ -50,7 +50,6 @@ int test_destroy_sensor(){
 	if(strcmp(test_sensor.name, "") != 0){result++;}
 	if(test_sensor.number_of_sensors != 0){result++;}
 	if(test_sensor.server_port != 0){result++;}
-	if(test_sensor.delay_in_seconds != 0){result++;}
 
 	return evaluate_result(result, "DESTROY_SENSOR");
 }
@@ -81,46 +80,33 @@ int test_create_sensor(){
 	if(test_sensor.sensor_tags[3] != "TAG4"){result++;};
 	if(test_sensor.number_of_sensors != 4){result++;}
 	if(test_sensor.server_port != 4242){result++;}
-	if(test_sensor.delay_in_seconds != 1){result++;}
 
 	return evaluate_result(result, "CREATE_SENSOR");
 }
 
 int test_measure(){
 	int result = EXIT_SUCCESS;
-	float* measurements = measure(&test_sensor);
+	measure(&test_sensor);
 
-	if(!measurements[0] || measurements[0] > MAX_MEASUREMENT){result++;}
-	if(!measurements[1] || measurements[0] > MAX_MEASUREMENT){result++;}
-	if(!measurements[2] || measurements[0] > MAX_MEASUREMENT){result++;}
-	if(!measurements[3] || measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[0] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[1] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[2] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
+	if(!test_sensor.measurements[3] || test_sensor.measurements[0] > MAX_MEASUREMENT){result++;}
 
 	return evaluate_result(result, "MEASUREMENTS");
-}
-
-int test_delay(){
-	int result = EXIT_SUCCESS;
-	time_t start_time, end_time;
-
-	start_time = time(NULL);;
-	delay(&test_sensor);
-	end_time = time(NULL);
-
-	if( (double)(end_time - start_time) < test_sensor.delay_in_seconds ){result++;};
-
-	return evaluate_result(result, "DELAY");
 }
 
 int test_convert_to_update(){
 	int result = EXIT_SUCCESS;
 
-	float* measurements = measure(&test_sensor);
-	ezxml_t XML = convert_to_update(measurements, &test_sensor);
+	measure(&test_sensor);
+	ezxml_t XML;
+	convert_to_update(&test_sensor, &XML);
 
 	if(strcmp(XML->name,"update") != 0){result++;};
 
 	for(int i = 0; i < test_sensor.number_of_sensors; i++){
-		if(ezxml_attr(XML, test_sensor.sensor_tags[i]) == NULL){result++;};
+		if(ezxml_name(ezxml_child(XML, test_sensor.sensor_tags[i])) == NULL){result++;};
 	}
 
 	ezxml_free(XML);
@@ -130,8 +116,9 @@ int test_convert_to_update(){
 
 int test_send_to_port(){
 	int result = EXIT_SUCCESS;
-	float* measurements = measure(&test_sensor);
-	ezxml_t XML = convert_to_update(measurements, &test_sensor);
+	measure(&test_sensor);
+	ezxml_t XML;
+	convert_to_update(&test_sensor, &XML);
 
 	result += send_to_port(XML, &test_sensor);
 
@@ -149,7 +136,21 @@ int test_send_to_port(){
 
 int test_measurement_client(){
 	printf("TESTING measurement_client\n");
-	//TODO: implement tests
+
 	int result = EXIT_SUCCESS;
+	result += test_delay();
 	return evaluate_result(result, "measurement_client\n");
+}
+
+int test_delay(){
+	int result = EXIT_SUCCESS;
+	time_t start_time, end_time;
+
+	start_time = time(NULL);
+	delay(1);
+	end_time = time(NULL);
+
+	if( (double)(end_time - start_time) < 1 ){result++;};
+
+	return evaluate_result(result, "DELAY");
 }
