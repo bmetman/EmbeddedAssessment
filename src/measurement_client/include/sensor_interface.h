@@ -24,16 +24,15 @@ typedef struct {
 	int number_of_sensors;
 	char** sensor_tags;
 	int server_port;
-	int delay_in_seconds;
 	float* measurements;
 	char** string_measurements;
 } sensor;
 
-void create_sensor(sensor*, char*, int, char**, int, int);
+void create_sensor(sensor*, char*, int, char**, int);
 int destroy_sensor(sensor*);
 int measure(sensor*);
-void delay(sensor*);
-ezxml_t convert_to_update(sensor*);
+void convert_to_update(sensor*, ezxml_t*);
+void pretty_print_update(ezxml_t, sensor*);
 int send_to_port(ezxml_t, sensor*);
 
 #endif /* SRC_SENSOR_INTERFACE_H_ */

@@ -8,7 +8,7 @@
 #include "../include/sensor_interface.h"
 
 // helper function to generate a common sensor struct
-void create_sensor(sensor* current_sensor, char* name, int number_of_sensors, char** sensor_tags, int server_port, int delay_in_seconds){
+void create_sensor(sensor* current_sensor, char* name, int number_of_sensors, char** sensor_tags, int server_port){
 
 	//seed randomizer
 	srand((unsigned int)time(NULL));
@@ -26,7 +26,6 @@ void create_sensor(sensor* current_sensor, char* name, int number_of_sensors, ch
 	}
 
 	current_sensor->server_port = server_port;
-	current_sensor->delay_in_seconds = delay_in_seconds;
 	current_sensor->measurements = malloc(number_of_sensors * sizeof(float));
 
 	current_sensor->string_measurements = malloc(number_of_sensors * sizeof(char*));
@@ -54,7 +53,6 @@ int destroy_sensor(sensor* current_sensor){
 	current_sensor->name = "";
 	current_sensor->number_of_sensors = 0;
 	current_sensor->server_port = 0;
-	current_sensor->delay_in_seconds = 0;
 
 	return EXIT_SUCCESS;
 }
@@ -71,23 +69,45 @@ int measure(sensor* current_sensor){
 	return EXIT_SUCCESS;
 }
 
-void delay(sensor* current_sensor){
-	sleep(current_sensor->delay_in_seconds);
-	return;
-}
-
-ezxml_t convert_to_update(sensor* current_sensor){
-	ezxml_t XML = ezxml_new("update");
+void convert_to_update(sensor* current_sensor, ezxml_t* update){
+	*update = ezxml_new("update");
+	ezxml_t child_XML;
 
 	for(int i = 0; i < current_sensor->number_of_sensors; i++){
 		sprintf(current_sensor->string_measurements[i], "%.2f", current_sensor->measurements[i]);
-		XML = ezxml_set_attr(XML, current_sensor->sensor_tags[i], current_sensor->string_measurements[i]);
-	}
 
-	return XML;
+		child_XML = ezxml_add_child(*update, current_sensor->sensor_tags[i], 0);
+		ezxml_set_txt(child_XML,current_sensor->string_measurements[i]);
+	}
+}
+
+void pretty_print_update(ezxml_t XML, sensor* current_sensor){
+
+	ezxml_t child_XML;
+
+	if(!strcmp(XML->name, "update")){
+
+		printf("UPDATE containing:\n");
+
+		for(int i = 0; i < current_sensor->number_of_sensors; i++){
+			child_XML = ezxml_child(XML, current_sensor->sensor_tags[i]);
+			if(child_XML != NULL){
+				if(child_XML->name && child_XML->txt){
+					printf("%s measurement with value: %s\n", child_XML->name, child_XML->txt);
+				}
+			}
+		}
+		printf("\n");
+	} else {
+		printf("INCORRECT UPDATEFORMAT\n\n");
+	}
 }
 
 int send_to_port(ezxml_t XML, sensor* current_sensor){
+
+	//TODO: implement send over TCP, for now mocking it
+	printf("SENDING UPDATE TO PORT %i\n", current_sensor->server_port);
+	pretty_print_update(XML, current_sensor);
 	return EXIT_SUCCESS;
 }
 

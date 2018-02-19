@@ -12,7 +12,11 @@
 #include <stdlib.h>
 #include "sensor_interface.h"
 
+#define NUMBER_OF_UPDATES 5
+#define UPDATE_DELAY_IN_SECONDS 2
+#define MAX_SEND_RETRY_COUNT 5
+
 int start_measurement_client(void);
-void pretty_print_update(ezxml_t);
+void delay(int);
 
 #endif /* MEASUREMENT_CLIENT_H_ */
