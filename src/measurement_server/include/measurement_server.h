@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ezxml.h>
+#include <tcp_interaction.h>
 
 typedef struct {
 	char* descriptor;
@@ -19,8 +20,12 @@ typedef struct {
 
 int start_measurement_server(void);
 char* process_client_update(ezxml_t*);
-char* serve_client_request(ezxml_t*);
-measurement* store_measurement(float*, char*);
-measurement* retrieve_measurement(char*);
+int serve_client_request(ezxml_t*, ezxml_t*);
+
+int number_of_stored_measurements();
+int store_measurement(float, char*);
+int clear_stored_measurements();
+int retrieve_measurements(measurement*);
+
 
 #endif /* MEASUREMENT_CLIENT_H_ */

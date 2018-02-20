@@ -10,7 +10,6 @@
 
 #include "../include/measurement_server.h"
 
-
 int start_measurement_server(){
 
 	printf("STARTING MEASUREMENT_SERVER");
@@ -26,17 +25,24 @@ char* process_client_update(ezxml_t* update){
 	return "TODO";
 }
 
-char* serve_client_request(ezxml_t* request){
-	return "TODO";
+int serve_client_request(ezxml_t* request, ezxml_t* status){
+	*status = ezxml_new("TODO");
+	return EXIT_SUCCESS;
 }
 
-measurement* store_measurement(float* values, char* descriptors){
-	return NULL;
+int number_of_stored_measurements(){
+	return 0;
 }
 
-measurement* retrieve_measurement(char* desciptor){
-	return NULL;
+int store_measurement(float value, char* tag){
+	return EXIT_SUCCESS;
 }
 
+int clear_stored_measurements(){
+	return EXIT_SUCCESS;
+}
 
+int retrieve_measurements(measurement* return_measurements){
+	return EXIT_SUCCESS;
+}
 
