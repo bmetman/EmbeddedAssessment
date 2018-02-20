@@ -13,7 +13,6 @@ void create_sensor(sensor* current_sensor, char* name, int number_of_sensors, ch
 	//seed randomizer
 	srand((unsigned int)time(NULL));
 
-	sensor si;
 	current_sensor->name = name;
 	current_sensor->number_of_sensors = number_of_sensors;
 
@@ -61,11 +60,9 @@ int destroy_sensor(sensor* current_sensor){
 // the actual measurement is mocked by a randomizer
 int measure(sensor* current_sensor){
 
-	float random_measurement;
 	for(int i = 0; i < current_sensor->number_of_sensors; i++){
 		current_sensor->measurements[i] = ((float)rand()/(float)(RAND_MAX)) * MAX_MEASUREMENT;
 	}
-
 	return EXIT_SUCCESS;
 }
 

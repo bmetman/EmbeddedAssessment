@@ -26,4 +26,14 @@ jobs:
             valgrind --tool=memcheck ./test
             ./test
             make clean
+      - run:
+          name: Build and test measurement_server
+          command: |
+            set -e
+            cd $HOME/project/src/measurement_server/src
+            make
+            valgrind --tool=memcheck ./run
+            valgrind --tool=memcheck ./test
+            ./test
+            make clean
 
