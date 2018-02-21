@@ -27,9 +27,9 @@ int main();
 int test_measurement_server();
 int test_tcp_connection();
 
-
 int test_process_client_update();
 int test_serve_client_request();
+int test_prettify_status();
 
 int test_number_of_stored_measurements();
 int test_store_measurement();

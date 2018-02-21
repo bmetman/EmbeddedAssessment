@@ -10,6 +10,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ezxml.h>
+#include <measurement_server.h>
 
 typedef struct {
 	int port;

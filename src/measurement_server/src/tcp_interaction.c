@@ -19,7 +19,7 @@ int start_connection(int port, TCP_connection* conn){
 //TODO: implement sending
 int send_TCP_message(char* message, TCP_connection* conn){
 	if(conn->connected){
-		printf("SENDING MESSAGE %s over port %i successful\n", message, conn->port);
+		printf("SENDING MESSAGE:\n %s over port %i successful\n", message, conn->port);
 		return EXIT_SUCCESS;
 	} else {
 		printf("SENDING MESSAGE FAILED");
@@ -29,7 +29,19 @@ int send_TCP_message(char* message, TCP_connection* conn){
 
 char* receive_TCP_message(TCP_connection* conn){
 	if(conn->connected){
-		return "MESSAGE";
+
+		ezxml_t update = ezxml_new("update");
+		ezxml_t child_XML;
+		child_XML = ezxml_add_child(update, "temperature", 0);
+		ezxml_set_txt(child_XML,"25.0");
+		child_XML = ezxml_add_child(update, "pressure", 0);
+		ezxml_set_txt(child_XML,"42.42");
+
+		char* prettified_update = process_client_update(update);
+
+		ezxml_free(update);
+
+		return prettified_update;
 	} else {
 		return "";
 	}
